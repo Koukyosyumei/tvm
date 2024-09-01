@@ -26,6 +26,7 @@ endif()
 # You can create a config.cmake at build folder
 # and add set(OPTION VALUE) to override these build options.
 # Alernatively, use cmake -DOPTION=VALUE through command-line.
+tvm_option(USE_COV "Build with coverage" ON)
 tvm_option(USE_CUDA "Build with CUDA" OFF)
 tvm_option(USE_NCCL "Build with NCCL" OFF)
 tvm_option(USE_MSCCL "Build with MSCCL" OFF)
@@ -599,6 +600,7 @@ include(cmake/modules/Git.cmake)
 include(cmake/modules/LibInfo.cmake)
 include(cmake/modules/RustExt.cmake)
 include(cmake/modules/contrib/Mrvl.cmake)
+include(cmake/modules/contrib/Memcov.cmake)
 
 set(LIBINFO_FILE ${CMAKE_CURRENT_LIST_DIR}/src/support/libinfo.cc)
 add_lib_info(${LIBINFO_FILE})
@@ -665,6 +667,11 @@ target_compile_definitions(tvm_runtime PUBLIC DMLC_USE_LOGGING_LIBRARY=<tvm/runt
 include(cmake/modules/Logging.cmake)
 
 include(cmake/modules/contrib/PAPI.cmake)
+
+if(USE_COV)
+  target_compile_options(tvm_objs PRIVATE -fsanitize-coverage=trace-pc-guard)
+  target_compile_options(tvm_runtime_objs PRIVATE -fsanitize-coverage=trace-pc-guard)
+endif()
 
 if(USE_MICRO)
   # NOTE: cmake doesn't track dependencies at the file level across subdirectories. For the
