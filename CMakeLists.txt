@@ -68,7 +68,7 @@ tvm_option(TVM_DEBUG_WITH_ABI_CHANGE "Enable debug code that may cause ABI chang
 tvm_option(TVM_LOG_BEFORE_THROW "Whether log before throw, for debugging purposes" OFF)
 tvm_option(USE_RTTI "Build with RTTI" ON)
 tvm_option(USE_MSVC_MT "Build with MT" OFF)
-tvm_option(USE_MICRO "Build with Micro TVM support" OFF)
+tvm_option(USE_MICRO "Build with Micro TVM support" ON)
 tvm_option(INSTALL_DEV "Install compiler infrastructure" OFF)
 tvm_option(HIDE_PRIVATE_SYMBOLS "Compile with -fvisibility=hidden." OFF)
 tvm_option(USE_TF_TVMDSOOP "Build with TensorFlow TVMDSOOp" OFF)
